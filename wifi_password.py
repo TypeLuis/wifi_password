@@ -10,3 +10,8 @@ wifis = [line.split(':')[1][1: -1] for line in data if 'All User Profile' in lin
 for wifi in wifis:
     results = subprocess.check_output(['netsh', 'wlan', 'show', 'profiles', wifi, 'key=clear']).decode('utf-8').split('\n')
     results = [line.split(':')[1][1: -1] for line in results if 'Key Content' in line]
+    try:
+        print(f'Wifi: {Fore.GREEN} {wifi} {Fore.RESET} /// Password: {Fore.CYAN}{results[0]} {Fore.RESET}')
+    except IndexError:
+        # continue
+       print(f'Wifi: {Fore.GREEN} {wifi} {Fore.RESET}/// {Fore.RED} Password Can\'t be read {Fore.RESET}')
